@@ -158,45 +158,6 @@
         };
         document.body.appendChild(script);
     </script>
-
-    <script>
-        (function () {
-            function patch(el) {
-                if (!el || el.dataset._oskPatched === "1") return;
-                el.dataset._oskPatched = "1";
-
-                el.removeAttribute("readonly");
-                el.removeAttribute("disabled");
-                el.setAttribute("inputmode", "none");
-                el.setAttribute("autocomplete", "off");
-                el.setAttribute("autocapitalize", "off");
-                el.setAttribute("autocorrect", "off");
-                el.setAttribute("spellcheck", "false");
-
-                el.style.opacity = 0;
-                el.style.position = "fixed";
-                el.style.top = "-10000px";
-                el.style.left = "-10000px";
-                el.style.width = "1px";
-                el.style.height = "1px";
-            }
-
-            Array.prototype.forEach.call(document.querySelectorAll("input,textarea"), patch);
-
-            const mo = new MutationObserver(muts => {
-                for (const m of muts) {
-                    for (const n of m.addedNodes) {
-                        if (n && (n.tagName === "INPUT" || n.tagName === "TEXTAREA")) patch(n);
-                        if (n && n.querySelectorAll) {
-                            n.querySelectorAll("input,textarea").forEach(patch);
-                        }
-                    }
-                }
-            });
-            mo.observe(document.documentElement, { childList: true, subtree: true });
-        })();
-    </script>
-
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function () {
             if (window.Telegram && Telegram.WebApp) {
